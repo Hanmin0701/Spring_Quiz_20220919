@@ -14,6 +14,9 @@ public class StoreBO {
 	@Autowired
 	private StoreDAO storeDAO;
 	
+	// input: Controller가 보내주지 않음 X
+	// output: List<Store> => 컨트롤러한테 보냄
+	
 	public List<Store> getStoreList() {
 		return storeDAO.selectStoreList();
 	}

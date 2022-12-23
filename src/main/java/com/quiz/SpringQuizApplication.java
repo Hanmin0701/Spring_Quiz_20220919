@@ -14,21 +14,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.quiz.*")  // mapper scan 추가 = dao를 찾는 것이다.
+@MapperScan(basePackages = "com.quiz.*") // mapper scan 추가 = dao를 찾는 것이다.
 public class SpringQuizApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringQuizApplication.class, args);
 	}
-	
-	@Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-
-        Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*Mapper.xml");
-        sessionFactory.setMapperLocations(res);
-
-        return sessionFactory.getObject();
-    }
 }

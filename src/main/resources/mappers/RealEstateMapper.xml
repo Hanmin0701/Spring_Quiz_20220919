@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.quiz.lesson03.dao.RealEstateDAO">
+ 	<!-- 1번째 문제: id = 20 -->
+ 	<select id="selectRealEstateList" resultType="com.quiz.lesson03.model.RealEstate">
+		SELECT
+			`id`
+			,`storeId`
+			,`menu`
+			,`userName`
+			,`point`
+			,`review`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`real_estate`
+		where 
+			`id` = 20;
+ 	</select>
+ 	
+ 	<!-- 2번째 문제: 월세보다 낮은 매물 -->
+ 	<select id="selectRealEstateList" resultType="com.quiz.lesson02.model.RealEstate">
+		SELECT
+			`id`
+			,`storeId`
+			,`menu`
+			,`userName`
+			,`point`
+			,`review`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`real_estate`
+ 		where 
+ 			`rentPrice` <= 90;
+ 	</select>
+ 	
+ 	<!-- 3번째 문제: 매매, 넓이, 가격 -->
+ 	<select id="selectRealEstateList" resultType="com.quiz.lesson02.model.RealEstate">
+		SELECT
+			`id`
+			,`storeId`
+			,`menu`
+			,`userName`
+			,`point`
+			,`review`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`real_estate`
+		where
+			`type` = '매매' and `area` >= 90 and `price` < 130000;
+ 	</select>
+ </mapper>
+ 		 
