@@ -4,54 +4,117 @@
  
  <mapper namespace="com.quiz.lesson03.dao.RealEstateDAO">
  	<!-- 1번째 문제: id = 20 -->
- 	<select id="selectRealEstateList" resultType="com.quiz.lesson03.model.RealEstate">
+ 	<select id="selectRealEstateById" parameterType="int" resultType="com.quiz.lesson03.model.RealEstate">
 		SELECT
 			`id`
-			,`storeId`
-			,`menu`
+			,`realtorId`
+			,`address`
 			,`userName`
-			,`point`
-			,`review`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
 			,`createdAt`
 			,`updatedAt`
 		FROM 
 			`real_estate`
 		where 
-			`id` = 20;
+			`id` = #{id}
  	</select>
  	
  	<!-- 2번째 문제: 월세보다 낮은 매물 -->
- 	<select id="selectRealEstateList" resultType="com.quiz.lesson02.model.RealEstate">
-		SELECT
+ 	<select id="selectRealEstateByRentPrice" parameterType="int" resultType="com.quiz.lesson03.model.RealEstate">
+ 		SELECT
 			`id`
-			,`storeId`
-			,`menu`
+			,`realtorId`
+			,`address`
 			,`userName`
-			,`point`
-			,`review`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
 			,`createdAt`
 			,`updatedAt`
 		FROM 
 			`real_estate`
- 		where 
- 			`rentPrice` <= 90;
+		WHERE
+		<![CDATA[
+			`rentPrice` < #{rentPrice}
+		]]>
  	</select>
  	
  	<!-- 3번째 문제: 매매, 넓이, 가격 -->
- 	<select id="selectRealEstateList" resultType="com.quiz.lesson02.model.RealEstate">
-		SELECT
+ 	
+ 	<select id="selectRealEstateByAreaPrice" parameterType="map" resultType="com.quiz.lesson03.model.RealEstate">
+ 		SELECT
 			`id`
-			,`storeId`
-			,`menu`
+			,`realtorId`
+			,`address`
 			,`userName`
-			,`point`
-			,`review`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
 			,`createdAt`
 			,`updatedAt`
 		FROM 
 			`real_estate`
-		where
-			`type` = '매매' and `area` >= 90 and `price` < 130000;
+		WHERE
+		<![CDATA[
+			`type` = '매매' and `area` = 'area' >= #{area} and `price` <= #{price}
+		]]>
+		ORDER BY `id` DESC;
  	</select>
+ 	
+ 	<!-- quiz02 -->
+ 	<!-- 1번 문제 -->
+ 	<insert id="insertRealEstate" parameterType="com.quiz.lesson03.model.RealEstate">
+ 		INSERT INTO `real_Estate`
+ 		(
+ 			`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		values
+ 		(
+ 			#{realtorId}
+ 			, #{address}
+ 			, #{area}
+ 			, #{type}
+ 			, #{price}
+ 			, NOW()
+ 			, NOW()
+ 		);
+ 	</insert>
+ 	
+ 	<!-- 2번 문제 -->
+ 	<insert id="insertRealEstateAsField" parameterType="map">
+ 		INSERT INTO `real_Estate`
+ 		(
+ 			`realtorId`
+ 			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		values
+ 		(
+ 			#{realtorId}
+ 			, #{address}
+ 			, #{area}
+ 			, #{type}
+ 			, #{price}
+ 			, #{rentPrice}
+ 			, NOW()
+ 			, NOW()
+ 		);
+ 	</insert>
  </mapper>
  		 
