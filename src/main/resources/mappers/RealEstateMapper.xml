@@ -3,6 +3,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.quiz.lesson03.dao.RealEstateDAO">
+ 	<!-- select문 -->
  	<!-- 1번째 문제: id = 20 -->
  	<select id="selectRealEstateById" parameterType="int" resultType="com.quiz.lesson03.model.RealEstate">
 		SELECT
@@ -66,7 +67,7 @@
 		ORDER BY `id` DESC;
  	</select>
  	
- 	<!-- quiz02 -->
+ 	<!-- quiz02 insert문 -->
  	<!-- 1번 문제 -->
  	<insert id="insertRealEstate" parameterType="com.quiz.lesson03.model.RealEstate">
  		INSERT INTO `real_Estate`
@@ -116,5 +117,26 @@
  			, NOW()
  		);
  	</insert>
+ 	
+ 	<!-- update문 -->
+ 	<!-- 1번 문제 -->
+ 	<update id="updateRealEstateById" parameterType="map">
+ 		UPDATE `real_estate`
+ 		SET
+ 			`type` = #{type}
+ 			,`price` = #{price}
+ 			,`updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{id}
+ 	</update>
+ 	
+ 	<!-- delete문 -->
+ 	<delete id="deleterealEstateById">
+ 		DELETE
+ 		FROM
+ 			`real_estate`
+ 		WHERE
+ 			`id` = #{id}
+ 	</delete>
  </mapper>
  		 

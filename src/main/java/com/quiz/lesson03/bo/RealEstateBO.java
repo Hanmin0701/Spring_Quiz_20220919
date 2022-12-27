@@ -15,7 +15,7 @@ import com.quiz.lesson03.model.RealEstate;
 @Service
 public class RealEstateBO {
 	
-	// 문제 1번
+	// quiz02 select
 	
 	@Autowired
 	private RealEstateDAO realEstateDAO;
@@ -38,13 +38,25 @@ public class RealEstateBO {
 		return realEstateDAO.selectRealEstateByAreaPrice(area, price);
 	}
 	
-	// quiz02 1번
+	// quiz02 insert
+	
 	public int addRealEstate(RealEstate realEstate) {
 		return realEstateDAO.insertRealEstate(realEstate);
 	}
 	
-	// quiz02 2번
-	public int addRealEstateAsField(int storeId, String address, int area, String type, int price, int rentPrice) {
+	public int addRealEstateAsField(int storeId, String address, int area, String type, int price, Integer rentPrice) { // 매매 인 걸 확인해야하기 떄문에 Integer로 해야한다.
 		return realEstateDAO.insertRealEstateAsField(storeId, address, area, type, price, rentPrice) ;
+	}
+	
+	// quiz03 update
+	
+	public int updateRealEstateById(int id, String type, int price) {
+		return realEstateDAO.updateRealEstateById(id, type, price);
+	}
+	
+	
+	// quiz04 delete
+	public void deleterealEstateById(int id) {
+		realEstateDAO.deleterealEstateById(id);
 	}
 }
