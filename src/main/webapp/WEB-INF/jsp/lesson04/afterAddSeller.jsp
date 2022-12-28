@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>seller 출력</title>
+<title>Insert title here</title>
 </head>
 <body>
-
+	<h1>입력 성공!</h1>
 </body>
 </html>
