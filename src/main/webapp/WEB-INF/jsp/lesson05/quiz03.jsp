@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>JSTL format</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -24,11 +25,11 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="vote" items="candidates" varStatus="status">
+			<c:forEach var="candidate" items="${candidates}" varStatus="status">
 				<tr>
 					<td>${status.count}</td>
-					<fmt:formatNumber value="${number}" type="number"/>
-					<td></td>
+					<td><fmt:formatNumber value="${candidate}" type="number"/></td>
+					<td><fmt:formatNumber value="${candidate/total}" type="percent"/></td>
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -50,14 +51,15 @@
 			<tbody>
 			<c:forEach var="card" items="cardBills" varStatus="status">
 				<tr>
-					<td>${cardBills.store}</td>
-					<fmt:formatNumber value="${number}" type="number">
-						<td>₩${cardBills.pay}</td>
-					</fmt:formatNumber>
-					<fmt:formatDate value="${Date}" type="date">
-						<td>${cardBills.date}</td>
-					</fmt:formatDate>
-					<td>${cardBills.installment}</td>
+					<td> ${cardBill.store} </td>
+					
+					<td><fmt:formatNumber value="${card.pay}" type="currency"/></td>
+
+					<td>
+						<fmt:parseDate var="Date" value="${card.date}" pattern="yyyy-MM-dd"/>
+						<fmt:parseDate var="$Date }" pattern="yyyy년 MM월 dd일" />
+					</td>
+					<td>${card.installment}</td>
 				</tr>
 			</c:forEach>
 			</tbody>

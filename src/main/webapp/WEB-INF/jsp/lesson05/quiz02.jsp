@@ -49,28 +49,28 @@
 			<tbody>
 			<c:forEach var="member" items="${membership}" varStatus="status">
 				<tr>
-					<td>${membership.name}</td>
-					<td>${membership.PhoneNumber}</td>
+					<td>${member.name}</td>
+					<td>${member.PhoneNumber}</td>
 					<c:choose>
 						<!-- GOLD -->
-						<c:when test="${membership.grade eq 'GOLD'} ">
+						<c:when test="${member.grade eq 'GOLD'} ">
 							<td>
-								<span class="text-warning">${membership.grade}</span>
+								<span class="text-warning">${member.grade}</span>
 							</td>
 						</c:when>
 						<!-- VIP -->
-						<c:when test=""${membership.grade eq 'VIP'}">
+						<c:when test=""${member.grade eq 'VIP'}">
 							<td>
-								<span class="text-danger">${membership.grade}</span>
+								<span class="text-danger">${member.grade}</span>
 							</td>
 						</c:when>
 						<c:otherwise>
-							<td>${membership.grade}</td>
+							<td>${member.grade}</td>
 						</c:otherwise>
 					</c:choose>
 					
 					<c:if test="${membership.point >= 5000}">
-						<td class="text-primary">${membership.point}P</td>
+						<td class="text-primary">${member.point}P</td>
 					</c:if>
 				</tr>
 			</c:forEach>
