@@ -3,6 +3,22 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.quiz.lesson05.dao.WeatherDAO">
+ 
+ 	<select id="selectWeather" resultType="com.quiz.lesson05.model.Weather">
+ 		SELECT 
+ 			`id`
+			,`date`
+			,`weather`
+			,`temperatures`
+			,`precipitation`
+			,`microDust`
+			,`windSpeed`
+			,`createdAt`
+			,`updatedAt`
+ 		FROM
+ 			`weather_history`
+ 	</select>
+ 	
  	<insert id="insertSeller" parameterType="map">
 	INSERT INTO `weather_history`
 	(

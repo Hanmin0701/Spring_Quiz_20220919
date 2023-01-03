@@ -6,10 +6,10 @@ public class Weather {
 	private int id;
 	private Date date;
 	private String weather;
-	private Double temperatures;
-	private Double precipitation;
+	private double temperatures;
+	private double precipitation;
 	private String microDust;
-	private Double windSpeed;
+	private double windSpeed;
 	private Date createdAt;
 	private Date updatedAt;
 	
@@ -32,16 +32,16 @@ public class Weather {
 	public void setWeather(String weather) {
 		this.weather = weather;
 	}
-	public Double getTemperatures() {
+	public double getTemperatures() {
 		return temperatures;
 	}
-	public void setTemperatures(Double temperatures) {
+	public void setTemperatures(double temperatures) {
 		this.temperatures = temperatures;
 	}
-	public Double getPrecipitation() {
+	public double getPrecipitation() {
 		return precipitation;
 	}
-	public void setPrecipitation(Double precipitation) {
+	public void setPrecipitation(double precipitation) {
 		this.precipitation = precipitation;
 	}
 	public String getMicroDust() {
@@ -50,10 +50,10 @@ public class Weather {
 	public void setMicroDust(String microDust) {
 		this.microDust = microDust;
 	}
-	public Double getWindSpeed() {
+	public double getWindSpeed() {
 		return windSpeed;
 	}
-	public void setWindSpeed(Double windSpeed) {
+	public void setWindSpeed(double windSpeed) {
 		this.windSpeed = windSpeed;
 	}
 	public Date getCreatedAt() {

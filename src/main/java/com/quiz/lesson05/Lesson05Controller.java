@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.oracle.wls.shaded.org.apache.xalan.lib.Redirect;
+import com.quiz.lesson05.bo.ReviewBO;
 import com.quiz.lesson05.bo.WeatherBO;
 import com.quiz.lesson05.model.Member;
+import com.quiz.lesson05.model.Review;
+import com.quiz.lesson05.model.Weather;
 
 @Controller
 @RequestMapping("/lesson05")
@@ -191,23 +195,52 @@ public class Lesson05Controller {
 	@Autowired
 	private WeatherBO weatherBO;
 	
-	@GetMapping("/addWeatherView")
-	public String addWeatherView() {
+	// 목록 화면
+	@GetMapping("/WeatherHistory")
+	public String addWeatherView(Model model) {
+		List<Weather> WeatherList =  weatherBO.getWeatherList();
 		
-		return "lesson05/addWeatherView";
+		model.addAttribute("weather", WeatherList);
+		
+		return "lesson05/Weather";
 	}
 	
-	@PostMapping("/addWeather")
-	public String addWeather(
-			@RequestParam("name") String name,
-			@RequestParam("date") Date date,
-			@RequestParam("weather") String weather,
-			@RequestParam("temperatures") Double temperatures,
-			@RequestParam("name") Double precipitation,
-			@RequestParam("microDust") String microDust,
-			@RequestParam("windSpeed") Double windSpeed) {
+	// 추가 화면
+	@GetMapping("/addWeather")
+	public String addWeather(Weather weather) {
 		
-		weatherBO.insertWeather(name, date, weather, temperatures, precipitation, microDust, windSpeed);
-		return "lesson05/addWeather";
+		// insert
+		weatherBO.addWeather(weather);
+		
+		// redirect
+		return "redirect:/lesson05/addWeatherView";
 	}
+	
+	
+	// 종합 문제 2
+	@Autowired
+	private ReviewBO reviewBO;
+	
+	// 목록 화면
+	@GetMapping("/store")
+	public String storeView(Model model) {
+		List<Review> ReviewList =  reviewBO.getReviewList();
+		
+		model.addAttribute("review", ReviewList);
+		
+		return "lesson05/Weather";
+	}
+	
+	// 추가 화면
+		@GetMapping("/review")
+		public String addReview(Review review) {
+			
+			// insert
+			reviewBO.addReview(review);
+			
+			// redirect
+			return "redirect:/lesson05/addWeatherView";
+		}
+
+	
 }
