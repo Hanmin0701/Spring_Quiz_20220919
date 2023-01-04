@@ -132,6 +132,14 @@
 		</footer>
 	</div>
 </body>
-</html>
-</body>
+<script>
+	$(document).ready(function)()) {
+		${'input[name=date]'}.datepicker
+		
+	}
+	
+	
+		
+</script>
+
 </html>

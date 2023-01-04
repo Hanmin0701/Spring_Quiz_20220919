@@ -19,7 +19,7 @@
  			`weather_history`
  	</select>
  	
- 	<insert id="insertSeller" parameterType="map">
+ 	<insert id="insertWeatherHistory" parameterType="map">
 	INSERT INTO `weather_history`
 	(
 		`id`

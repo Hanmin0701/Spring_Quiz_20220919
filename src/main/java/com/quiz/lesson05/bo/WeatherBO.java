@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.quiz.lesson04.model.Realtor;
 import com.quiz.lesson05.dao.WeatherDAO;
@@ -22,7 +23,7 @@ public class WeatherBO {
 	}
 	
 	// insert
-	public void addWeather(Weather weather) {
-		weatherDAO.insertWeather(weather);
+	public void addWeather(Date date, String weather,String microDust,double temperatures,double precipitation, double windSpeed) {
+		weatherDAO.addWeatherHistory(date, weather, microDust, temperatures, precipitation,windSpeed);
 	}
 }

@@ -3,6 +3,7 @@ package com.quiz.lesson05;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import com.quiz.lesson05.bo.WeatherBO;
 import com.quiz.lesson05.model.Member;
 import com.quiz.lesson05.model.Review;
 import com.quiz.lesson05.model.Weather;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/lesson05")
@@ -196,7 +199,7 @@ public class Lesson05Controller {
 	private WeatherBO weatherBO;
 	
 	// 목록 화면
-	@GetMapping("/WeatherHistory")
+	@GetMapping("/weather_history")
 	public String addWeatherView(Model model) {
 		List<Weather> WeatherList =  weatherBO.getWeatherList();
 		
@@ -206,14 +209,22 @@ public class Lesson05Controller {
 	}
 	
 	// 추가 화면
-	@GetMapping("/addWeather")
-	public String addWeather(Weather weather) {
+	@PostMapping("/addWeather")
+	public String addWeather(
+			// @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
+			@RequestParam("date") Date date, // String으로 인서트를 해도 DB에서는 date타입으로 잘 저장된다.
+			@RequestParam("weather") String weather,
+			@RequestParam("microDust")  String microDust,
+			@RequestParam("temperatures") double temperatures,
+			@RequestParam("precipitation") double precipitation, 
+			@RequestParam("windSpeed") double windSpeed,
+			HttpServletResponse response) {
 		
 		// insert
-		weatherBO.addWeather(weather);
+		weatherBO.addWeather(date,weather, microDust,temperatures, precipitation, windSpeed);
 		
 		// redirect
-		return "redirect:/lesson05/addWeatherView";
+		return "redirect:/lesson05/weather_history";
 	}
 	
 	
@@ -231,16 +242,15 @@ public class Lesson05Controller {
 		return "lesson05/Weather";
 	}
 	
-	// 추가 화면
+	// 추가 화면 
 		@GetMapping("/review")
 		public String addReview(Review review) {
 			
 			// insert
 			reviewBO.addReview(review);
 			
-			// redirect
+			// 추가=> 결과화면 목록 화면 이동{ㄱㄷㅇㄱㄷㄷㅇ)_redirect
 			return "redirect:/lesson05/addWeatherView";
 		}
-
-	
+		
 }
