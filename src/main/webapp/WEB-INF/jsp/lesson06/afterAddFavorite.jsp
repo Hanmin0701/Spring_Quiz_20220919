@@ -6,6 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>즐겨찾기 목록</title>
+ <!-- 부트 스트랩 -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"	crossorigin="anonymous"></script>
+	
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -19,15 +32,43 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="favorite" items="" varStatus="status">
+				<c:forEach var="favorite" items="${favoriteList}" varStatus="status">
 					<tr>
-						<td>${status.count}</td>
+						<td>${favorite.id}</td>
 						<td>${favorite.name}</td>
 						<td>${favorite.name}</td>
+						<td><button type="text" class="delBtn delBtn-danger text-white" value="삭제"/></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
 </body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			// 중복 버튼
+			$('.delBtn').on('click', function(){
+				// 하위 태그들 초기화
+				$('.delBtn').empty(); 	
+				
+			$.ajax({
+				
+				// request
+				type:"post"
+				,url:"/lesson06/quiz02"
+				,data:{"":}
+			
+				// response
+				, success:function(data) {
+					
+				}
+				
+				, error function(e) {
+					alert("실패" + e);
+				}
+			});
+			}
+		});
+	</script>
+	
 </html>
