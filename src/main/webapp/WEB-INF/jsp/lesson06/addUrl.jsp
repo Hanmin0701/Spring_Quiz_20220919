@@ -25,53 +25,60 @@
 		
 		<div class="form-group">
 			<label for="title">제목</label>
-			<input type="text" class="form-control col-3" id="title"><br>
-			
+			<input type="text" class="form-control" id="title"><br>
+		</div>
+		
+		<div class="form-group">
 			<label for="url">주소</label>
-			<div class="d-flex">
-				<input type="text" class="form-control col-3" id="url">
-				<button type="button" class="btn btn-info" id="urlDuplicationBtn">중복확인</button>
+			<div class="form-inline">
+				<input type="text" class="form-control col-10" id="url">
+				<button type="button" class="btn btn-info" id="checkBtn">중복확인</button>
 			</div>
 			
-			<small id="urlStatusArea"></small>			
+			<small id="duplicationText" class="text-danger d-none">중복된 URL입니다.</small>			
+			<small id="availableText" class="text-success d-none">저장 가능한 URL입니다.</small>			
 		</div>	
 
 			<button type="button" class="btn btn-success">추가</button>
 	</div>
 </body>
+
 	<script type="text/javascript">
 		$(document).ready(function(){
 			// 주소 중복 확인버튼
-			$('#urlDuplicationBtn').on('click', function(){
+			$('#checkBtn').on('click', function(){
 				// #urlStatusArea 하위 태그들 초기화
-				$('#urlStatusArea').empty();
-				
+				$('#checkBtn').empty();
 				let url = $('url').val().trim();
 				
 				// 주소가 입력이 되었는지 validation
-				/* if (url == ) {
+				if (url == ) {
 					$('urlStatusArea').append('<span class="text-danger">주소를 입력해주세요.</span>')
 				}
-				 */
-				 
+				
+				// AJAX -> DB 확인	
 				$.ajax({
 					
 					// request
-					type:"get"
-					, url:"/lesson06/quiz02/url_duplication"
+					type:"post"
+					, url:"/lesson06/quiz02/is_duplication_url"
 					, data:{"url":url}
 				
 					// response
-					,success:function(data){
-						if (data.url_duplication) {
-							$('#urlStatusArea').append('<span class="text-danger">중복된 url입니다.</span>');						
-						} else {
-							$('#urlStatusArea').append('<span class="text-danger">저장 가능한 url입니다.</span>')
+					,success:function(data){ // 삭제가 되면 그게 계속 나오므로 하나를 감추고 하나를 노출하도록 처리하면 된다.
+						if (data.is_duplication) { 
+							// 중복 확인
+							$('#availableText').addClass("d-none");
+							$('#duplicationText').removeClass("d-none");	
+						} else { 
+							// 사용 가능한 url
+							$('#duplicationText').addClass("d-none");
+							$('#availableText').removeClass("d-none");
 						}
 					}
 					
 					,error:function(e) {
-						alert("실패" + e)
+						alert("에러" + e);
 					}
 				});
 			});

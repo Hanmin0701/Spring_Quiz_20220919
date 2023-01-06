@@ -15,8 +15,12 @@ public interface BookMarkDAO {
 		
 		public List<BookMark> selectFavoriteLsit();
 		
-		public boolean existAddressByUrl(String url);
+		
+		// 데이터를 가져와서 푸는 법
+		public List<BookMark> selectFavoriteByUrl(String url);
+		
+//		public boolean existAddressByUrl(String url);
 		
 		// 행 삭제
-		public Integer deleteRowById(int id);
+		public int deleteFavoriteById(int id);
 }

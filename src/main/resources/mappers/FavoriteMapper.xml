@@ -20,7 +20,8 @@
 		 )
  	</insert>
  	
- 	<select id="selectFavorite" resultType="com.quiz.lesson06.dao.BookMarkDAO">
+ 	<!-- 데이터를 가져와서 푸는 법 -->
+ 	<select id="selectFavoriteByUrl" resultType="com.quiz.lesson06.model.BookMark">
  		SELECT
  				`id`
 	 			,`name`
@@ -29,16 +30,19 @@
 			 	,`updatedAt`
 		FROM
 			`bookMark`
+		WHERE
+			`url` = #{url}
  	</select>
  	
- 	<select id="existAddressByUrl" parameterType="map" resultType="boolean">
+ 	<!-- <select id="existAddressByUrl" parameterType="map" resultType="boolean">
  		SELECT
 			COUNT(*)
 		FROM
 			`bookMark`
  	</select>
- 	
- 	<delete id="deleteRowById" parameterType="int">
+ 	 -->
+ 	 
+ 	<delete id="deleteFavoriteById" parameterType="int">
  		DELETE 
  		FROM 
  			`bookMark`
