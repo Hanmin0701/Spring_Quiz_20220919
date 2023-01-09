@@ -118,83 +118,32 @@
 
         <script>
             $(document).ready(function() {
-                $('input[name=member]').change(function() {
-                    var radioValue = $(this).val();
-                    if (radioValue == 'member') {
-                        $('#memberInputBox').removeClass("d-none");
-                        $('#nonMemberInputBox').addClass("d-none");
-                    } else {
-                        $('#nonMemberInputBox').removeClass("d-none");
-                        $('#memberInputBox').addClass("d-none");
-                    }
-                });
-
-                // 2-2. 날짜 영역 datePicker로 선택하기
-                $('#reserveDateText').datepicker({
-                    dateFormat: "yy년 mm월 dd일"
-                    , minDate: 0   
-                });
-
-                // 조회하기
-                $('.submit-btn').on('click', function(e) {
-                    e.preventDefault();
-
-                    var memberRadioValue = $('input:radio[name=member]:checked').val(); 
-                    console.log(memberRadioValue); 
-
-                    if (memberRadioValue == 'member') {
-                        // 회원 
-                        if ($('#id').val().trim() == '') {
-                            alert("아이디를 입력하세요");
-                            return;
-                        }
-
-                        if ($('#password').val() == '') {
-                            alert("비밀번호를 입력하세요");
-                            return;
-                        }
-                    } else {
-                        // 비회원
-                        if ($('#name').val().trim() == '') {
-                            alert("이름을 입력하세요");
-                            return;
-                        }
-
-                        if ($('#phoneNumber').val().trim() == '') {
-                            alert("전화번호를 입력하세요");
-                            return;
-                        }
-
-                        if ($('#reserveDateText').val() == '') {
-                            alert("날짜를 선택해주세요");
-                            return;
-                        }
-
-                        
-                        if ($('#phoneNumber').val().startsWith('010') === false) {
-                            alert("010으로 시작하는 번호만 입력 가능합니다.");
-                            return;
-                        }
-                    }
-                });
-
-				// 이미지
-                var bannerSrcArr = ['banner1.jpg', 'banner2.jpg', 'banner3.jpg', 'banner4.jpg'];
-                var currentIndex = 0;
-                setInterval(function() {
-                    $('#bannerImage').attr('src', bannerSrcArr[currentIndex]);
-                    currentIndex++;
-
-                    if (currentIndex > bannerSrcArr.length) {
-                        currentIndex = 0;
-                    }
-                }, 2000);
-				
                 // 예약 조회
                 $('#lookUpBtn').on('click', function(){
                 	let name = $("name").val().trim();
                 	let phoneNumber = $("phoneNumber").val().trim();
                 	
+                	if (name == "") {
+                		alert("이름을 입력하세요.")
+                		return;
+                	}
+                	
+        			if (phoneNumber == "") {
+        				alert("전화번호를 입력하세요.");
+        				return;
+        			}
+                	
+					// 이미지
+                	 var bannerSrcArr = ['banner1.jpg', 'banner2.jpg', 'banner3.jpg', 'banner4.jpg'];
+                	 var currentIndex = 0;
+                	 setInterval(function() {
+	                    $('#bannerImage').attr('src', bannerSrcArr[currentIndex]);
+	                    currentIndex++;
+	
+	                  	  if (currentIndex > bannerSrcArr.length) {
+	                        currentIndex = 0;
+	                  	  }
+                	 }, 2000);
                 
 	                $.ajax({
 	                	type:"post"
@@ -202,11 +151,19 @@
 	                	date:{"name": name, "phoneNumber": phoneNumber}
 	                
 	                , success: function(){
-	                	
+	                	if (data.code == 1) { // 조회된 내역 있을 때
+	                		let message = "이름 :" + data.booking.name
+	                		+ "\n날짜 :" + data.booking.date.slice(0, 10)  // 2023-01-10  0 ~ 9 까지만 나와야한다.
+	                		+ "\n일수 :" + data.booking.day
+	                		+ "\n인원 :" + data.booking.headcount
+	                		+ "\n상태 :" + data.booking.state;
+	                	} else { // 조회된 내역 없을 때 또는 애러 상황
+	                		alert("예약 내역이 없습니다.")
+	                	}
 	                }
 	                
 	                , error:function(e){
-	                	
+	                	alert("조회에 실패했습니다.")
 	                }
 	                
 	                });

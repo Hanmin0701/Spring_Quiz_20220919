@@ -10,7 +10,9 @@ public class Booking {
 	private Date date;
 	private String phoneNumber;
 	private String state;
-	
+	private Date createdAt;
+	private Date updatedAt;
+
 	// getters and setters
 	public int getId() {
 		return id;
@@ -53,5 +55,17 @@ public class Booking {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }

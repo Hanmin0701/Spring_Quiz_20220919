@@ -18,7 +18,9 @@
 	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"	crossorigin="anonymous"></script>
 	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 </head>
 <body>
 	<div class="container">
@@ -53,7 +55,7 @@
 				
 				<label><a href="/lesson06Pension/add_pension_view">숙박인원</a></label><br>	
 				<input type="text" class="form-control col-8 mt-2" id="headcount">
-				
+ 				
 				<label><a href="/lesson06Pension/add_pension_view">전화번호</a></label><br>
 				<input type="text" class="form-control col-8 mt-2" id="phoneNumber">
 			</div>
@@ -73,55 +75,62 @@
 </body>
 <script type="text/javascript">
 	$(doucument).ready(function(){
-		$('#reservationBtn').on('click', function(){
-			let name = $('name').val().trim();
-			if (name.length == '') {
+		$('input[name=date]').on('click', function(){
+			dateformat="yyyy-MM-dd"
+			, mindate:0   // 오늘부터 그 뒤 선택
+		});
+		
+		// 예약하기 버튼
+		$('#reservationBtn').on("click", function(){
+			let name = $('input[name=name]').val().trim();
+			if (name == "") {
 				alert("제목을 입력하세요.");
 				return;
 			}
 			
-			let date = $('date').val().trim();
-			if (date.length == '') {
-				alert("날짜를 입력하세요.");
+			let date = $('input[name=date]').val().trim();
+			if (date == "") {
+				alert("날짜를 선택하세요.");
 				return;
 			}
 			
-			let day = $('day').val().trim();
-			if (day.length == '') {
-				alert("숙박 일수를 입력하세요.");
+			let day = $('input[name=day]').val().trim();
+			if (day == "") {
+				alert("숙박 일을 선택하세요.");
 				return;
 			}
 			
-			let headcount = $('headcount').val().trim();
-			if (headcount.length == '') {
-				alert("몇명인지를 입력하세요.");
+			let headcount = $('input[name=headcount]').val().trim();
+			if (headcount == "") {
+				alert("숙박인원을 입력하세요.");
 				return;
 			}
 			
-			let phoneNumber = $('phoneNumber').val().trim();
-			if (phoneNumber.length == '') {
+			let phoneNumber = $('input[name=phoneNumber]').val().trim();
+			if (phoneNumber == "") {
 				alert("전화번호를 입력하세요.");
 				return;
 			}
 			
-			
 			$.ajax({ 
 				// request
 				type:"POST"
-				, url: "/lesson06/quiz01/add_pension"
+				, url: "/booking/add_pension"
 				, date: {"name": name, "date": date, "day": day, "headcount": headcount, "phoneNumber": phoneNumber}
 			
 				// response
-				, success:function(data) {  // String json으로 내려온 형태 => object
+				, success:function(data) { 
 					if(data.result == "성공"){
-						location.href="/lesson06Pension/quiz01/after_reservation";
+						alert("예약 되었습니다.")
+						location.href="/booking/add_pension_view";
 					}
 				}
 				
 				, error:function(e) {
-                   	alert("에러" + e);
+                   	alert("예약하는데 실패했습니다.");
                 }
-			})
+			});
+			
 		});
 	});
 	</script>

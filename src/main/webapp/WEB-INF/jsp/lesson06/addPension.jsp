@@ -52,29 +52,31 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="pension" items="${booking}" varStatus="status">
+					<c:forEach var="booking" items="${bookingList}" varStatus="status">
 					<tr>
-						<td>${pension.name}</td>
-						<td>${pension.date}</td>
-						<td>${pension.day}</td>
-						<td>${pension.headcount}</td>
-						<td>${pension.phoneNumber}</td>
+						<td>${booking.name}</td>
+						<td>
+							<fmt:formatDate value="${booking.date}" pattern="yyyy년 M월 d일"></fmt:formatDate>
+						</td>
+						<td>${booking.day}</td>
+						<td>${booking.headcount}</td>
+						<td>${booking.phoneNumber}</td>
 						<td>
 							<c:choose>
-								<c:when test="${pension.state eq '대기중'}">
+								<c:when test="${booking.state eq '대기중'}">
 									<span class="text-info">$pension.state}</span>
 								</c:when>
-								<c:when test="${pension.state eq '확정'}">
+								<c:when test="${booking.state eq '확정'}">
 									<span class="text-success">${pension.state}</span>
 								</c:when>
-								<c:otherwise>
-									${pension.state}
-								</c:otherwise>
+								<c:when test="${booking.state eq '취소'}">
+									<span class="text-danger">${pension.state}</span>
+								</c:when>
 							</c:choose>
 						</td>
 						<td>
-							<button type="button" name="delBtn" class="del-btn btn btn-danger text-white form-control" 
-							data-booking-name="${pension.name}">삭제</button>
+							<button type="button" name="delBtn" class="del-btn btn btn-danger text-white" 
+							data-booking-id="${booking.id}">삭제</button>
 						</td>
 					</tr>
 					</c:forEach>
@@ -91,32 +93,35 @@
 			</small>
 		</footer>
 	</div>
-</body>
-<script type="text/javascript">
-	$(doucument).ready(function(){
-		$('button[name=delBtn]').on('click', function(){
-			$(this).val();
-			
+	<script type="text/javascript">
+		$(doucument).ready(function(){
 			$('del-btn').on('click', function(){
-				let name = $(this).data('pension-name');
+				// data-booking-id
+				let id = $(this).data('booking-id');
+				// alert(id);
 				
-			$.ajax({ 
-				// request
-				type:"delete"
-				, url: "/lesson06/quiz01/delete_booking"
-				, date: {"name": name}
-			
-				// response
-				, success:function(data) {
-					if (data.code == 200) {
-						document.location.reload =true;
-					} else if (data.code == 500){
-						// 에러
-						alert(data.error_message);
+				$.ajax({ 
+					// request
+					type:"delete"
+					, url: "/booking/delete_booking"
+					, date: {"id": id}
+				
+					// response   
+					, success:function(data) {
+						// <성공 = 200, 실패 = 500, error_message = 삭제하는데 실패했습니다.>
+						if (data.code == 200) { 
+							// 새로고침
+							document.location.reload(true);
+						} else if (data.code == 500){
+							// 에러
+							alert(data.error_message);
+						}
 					}
-				}
-			})
+					, error:function(e) {}
+						alert("삭제하는데 실패했습니다.")
+				})
+			});
 		});
-	});
-</script>
+	</script>
+</body>
 </html>
